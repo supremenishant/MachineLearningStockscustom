@@ -7,6 +7,12 @@ import numpy as np
 from tqdm import tqdm
 from utils import data_string_to_float
 
+headers ={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.66 Safari/537.36',
+'Accept'          : 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 
+    'Accept-Language' : 'en-US,en;q=0.5',
+    'DNT'             : '1', # Do Not Track Request Header 
+    'Connection'      : 'close'}
+
 # The path to your fundamental data
 statspath = "intraQuarter/_KeyStats/"
 
@@ -76,8 +82,8 @@ def check_yahoo():
 
     for ticker in tqdm(ticker_list, desc="Download progress:", unit="tickers"):
         try:
-            link = f"http://finance.yahoo.com/quote/{ticker.upper()}/key-statistics"
-            resp = requests.get(link)
+            link = f"https://finance.yahoo.com/quote/{ticker.upper()}/key-statistics"
+            resp = requests.get(link,  headers=headers)
 
             # Write results to forward/
             save = f"forward/{ticker}.html"
